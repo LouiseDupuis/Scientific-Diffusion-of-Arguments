@@ -18,10 +18,10 @@ if __name__ == '__main__':
 
     start = time.process_time()
 
-    number_of_runs = 10
+    number_of_runs = 1
 
     param_dict = dict()
-    param_dict['number_of_s_agents'] = 1
+    param_dict['number_of_s_agents'] = 20
     param_dict['step_count'] = 600
     param_dict['sigma'] = 0.15 #accuracy ?
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
     debate_id = 0
     for N in [20]:
-        for p_er in [0.1, 0.5, 0.9]:
+        for p_er in [0.1]:
         #param_dict['p_accept'] = p_accept
             for i in range(number_of_runs):
                 #p = random.random()

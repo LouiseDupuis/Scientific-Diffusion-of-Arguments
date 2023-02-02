@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #data = pd.read_excel("20 agents_pER=0_1500_steps_model_stats_06_09_2022 11_08_13.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("20_agents_500_steps_model_stats_05_09_2022 15_45_18.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("model_stats_06_09_2022 14_59_11.xlsx",sheet_name = "Agents")
-adress = "model_stats_01_02_2023 13_49_13.xlsx"
+adress = "model_stats_01_02_2023 22_00_21.xlsx"
 data = pd.read_excel(adress, sheet_name = "Agents")
 
 

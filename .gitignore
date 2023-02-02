@@ -165,5 +165,5 @@ out.txt
 
 #excel data files 
 
-.xlsx
-.csv
+*.xlsx
+*.csv
