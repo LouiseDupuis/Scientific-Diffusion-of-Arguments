@@ -19,10 +19,9 @@ if __name__ == '__main__':
     start = time.process_time()
 
     number_of_runs = 10
-
     param_dict = dict()
-    param_dict['number_of_s_agents'] = 20
-    param_dict['step_count'] = 1000
+    param_dict['number_of_s_agents'] = 0
+    param_dict['step_count'] = 500
     param_dict['sigma'] = 0.15 #accuracy ?
 
     # Connection parameters
@@ -37,10 +36,10 @@ if __name__ == '__main__':
 
     # -- Creating the Network of Agents 
 
-    #if param_dict['communication_mode'] == 'network':
+    if param_dict['communication_mode'] == 'network':
 
         # 1 - Erdos Renyi Graphs
-        # p = 0.7 #probability that an agent is connected to another (for Erdos Renyi graphs)
+        param_dict['p_er'] = 0.7 #probability that an agent is connected to another (for Erdos Renyi graphs)
         # param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], p)
 
         # 2 - Classical Graphs
@@ -72,14 +71,16 @@ if __name__ == '__main__':
     mean_result_list = []
 
     debate_id = 0
-    for N in [20]:
-        for p_er in [0.1,0.5,0.9]:
+    for N in [10]:
+        for p_er in [0, 0.5, 0.9]:
         #param_dict['p_accept'] = p_accept
             for i in range(number_of_runs):
                 #p = random.random()
                 param_dict['world_value'] = random.random()
                 param_dict['number_of_s_agents'] = N
-                param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], p_er)
+                param_dict['p_er']=p_er
+                if param_dict['communication_mode'] == 'network':
+                    param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], param_dict['p_er'])
 
             
                 model = InformationDiffusion(param_dict, lightmode=True)
