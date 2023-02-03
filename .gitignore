@@ -162,6 +162,7 @@ cython_debug/
 
 out.txt
 /Output_Data
+/MABS_data
 
 #excel data files 
 

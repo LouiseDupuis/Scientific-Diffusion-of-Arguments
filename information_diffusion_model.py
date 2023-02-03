@@ -93,7 +93,7 @@ class InformationDiffusion(Model):
                             "Nb of Arguments" : lambda m: m.public_scientific_graph.number_of_nodes(),
                             "Collective Error" : lambda m: abs(m.world_value - m.get_current_scientific_value()),
                             "Avg of Agent\'s Opinion" : lambda m: round(np.average(m.get_agents_opinion()),5),
-                            "STD of Agent\'s Opinion'" : lambda m: round(np.std(m.get_agents_opinion()),5),
+                            "Opinion Diversity" : lambda m: round(np.std(m.get_agents_opinion()),5),
                             "Average of Errors" : lambda m: round(np.average([abs(m.world_value - opinion) for opinion in m.get_agents_opinion()]),5),
                             "Truth Deviation" : lambda m : np.sqrt((1/m.num_s_agents)*np.sum([(m.world_value - opinion)**2 for opinion in m.get_agents_opinion()]))
             
