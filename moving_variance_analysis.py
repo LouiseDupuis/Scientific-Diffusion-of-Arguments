@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #data = pd.read_excel("20 agents_pER=0_1500_steps_model_stats_06_09_2022 11_08_13.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("20_agents_500_steps_model_stats_05_09_2022 15_45_18.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("model_stats_06_09_2022 14_59_11.xlsx",sheet_name = "Agents")
-adress = "MABS_data\model_stats_05_02_2023 11_14_44.xlsx"
+adress = "MABS_data\model_stats_05_02_2023 15_19_09.xlsx"
 data = pd.read_excel(adress, sheet_name = "Agents")
 
 
@@ -122,7 +122,7 @@ for p_er in data["P ER"].unique():
 
 print(g_dict)
 dt = pd.DataFrame(g_dict)
-dt.to_csv("mv_data_5_agents_stability" +".csv")
+dt.to_csv("mv_data_10_agents_stability" +".csv")
 
 # ax.legend(["MV", str(threshold)])
 

@@ -4,10 +4,10 @@ import numpy as np
 import pandas as pd
 ### Plot 
 
-adress1 = "MABS_data\mv_data_model_stats_01_02_2023 15_48_13.xlsx.csv" #10 agents
+adress1 = "MABS_data\mv_data_10_agents_stability.csv" #10 agents
 #adress2 = "MABS_data\mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv" # 5 agents
 adress2 = "MABS_data\mv_data_5_agents_stability.csv" # 5 agents, 1000 steps
-adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
+#adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
 
 stability_data = dict()
 # stability_data[0.001,0.9] = [169, 138, 125, 229, 135, 145, 114, 118, 278, 109]
@@ -25,26 +25,24 @@ stability_data = dict()
 data1=pd.read_csv(adress1)
 data1["N"] = 10
 
+
 data2=pd.read_csv(adress2)
 data2["N"] = 5
 
-data3=pd.read_csv(adress3)
-data3["N"] = 20
+# data3=pd.read_csv(adress3)
+# data3["N"] = 20
 
-print(data2)
-mv_data = pd.concat([data1, data2, data3], axis=1)
-print(mv_data)
+stability_data = pd.concat([data1, data2], axis=0,ignore_index=True)
+print(stability_data)
 
-i=0
-for N in [10,5,20]:
-    for p_er in [0.1, 0.5, 0.9]:
-        stability_data[N,p_er] = []
-        for d in mv_data[i]:
-            if d=='False':
-                stability_data[N,p_er] += [650]
-            else:
-                stability_data[N,p_er] += [int(d)]
-        i +=1
+# for row in mv_data.items()
+#         stability_data[N,p_er] = []
+#         for d in mv_data[i]:
+#             if d=='False':
+#                 stability_data[N,p_er] += [650]
+#             else:
+#                 stability_data[N,p_er] += [int(d)]
+#         i +=1
 
 
 
@@ -55,21 +53,24 @@ ax = fig.add_subplot(projection='3d')
 
 m = 'o' #marker
 
-s1=[]
-s2=[]
+cmap = plt.cm.get_cmap('tab10')
+colors = dict([(N,cmap(N*0.1)) for N in stability_data["N"].unique()])
 
-for (N, p_er), points in stability_data.items():
+for N in stability_data["N"].unique():
+        color = colors[N]
+        averages=[]
+        for p_er in stability_data.columns[1:-1]:
+                points = stability_data[stability_data["N"]==N][str(p_er)].values
+                print(points)
 
-
-        xs = [N for i in range(len(points))]
-        ys = [p_er for i in range(len(points))]
-        za = np.average(points)
-        zs = points
-        ax.scatter(xs, ys, zs, marker=m, color="orange")
-        ax.scatter(xs, ys, za, marker='^', color='black', linewidth=5)
-    
-
-ax.plot(xs, ys, za, color='blue')
+                xs = [N for i in range(len(points))]
+                ys = [float(p_er) for i in range(len(points))]
+                za = np.average(points)
+                zs = points
+                ax.scatter(xs, ys, zs, marker=m, color=color)
+                ax.scatter(xs, ys, za, marker='^', color='black', linewidth=5)
+                averages+=[(N,float(p_er),za)]
+        ax.plot([N for N,p_er,av in averages], [p_er for N,p_er,av in averages], [av for N,p_er,av in averages], color='blue')
 
 ft_size = 15
 ax.set_xlabel('$N$')

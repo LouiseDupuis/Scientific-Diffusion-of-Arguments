@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     start = time.process_time()
 
-    number_of_runs = 10
+    number_of_runs = 40
     param_dict = dict()
     param_dict['number_of_s_agents'] = 0
     param_dict['step_count'] = 1000
