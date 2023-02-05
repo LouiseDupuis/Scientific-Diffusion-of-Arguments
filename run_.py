@@ -21,7 +21,7 @@ if __name__ == '__main__':
     number_of_runs = 40
     param_dict = dict()
     param_dict['number_of_s_agents'] = 0
-    param_dict['step_count'] = 1000
+    param_dict['step_count'] = 500
     param_dict['sigma'] = 0.15 #accuracy ?
 
     # Connection parameters
