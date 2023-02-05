@@ -9,6 +9,7 @@ import pandas as pd
 adress = "MABS_data\merged_10_agents_p_er_500_steps.xlsx" #merged 
 
 ft_size = 15 # font size for axis labels
+plt.rcParams.update({'font.size': ft_size})
 
 data = pd.read_excel(adress, sheet_name="Model")
 print(data)
@@ -21,8 +22,8 @@ print(p_data)
 plt.scatter(p_data.index, p_data.values)
 plt.plot(p_data.index, p_data.values)
 
-plt.xlabel("$p_{ER}$", font_size=ft_size)
-plt.ylabel("Opinion Diversity $ED$", font_size=ft_size)
+plt.xlabel("$p_{ER}$")
+plt.ylabel("Opinion Diversity $ED$")
 plt.xticks(fontsize = ft_size)
 plt.yticks(fontsize = ft_size)
 plt.show()

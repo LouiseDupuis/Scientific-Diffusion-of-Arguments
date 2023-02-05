@@ -71,14 +71,15 @@ if __name__ == '__main__':
     mean_result_list = []
 
     debate_id = 0
-    for N in [20]:
-        for p_er in [0.1, 0.5, 0.9]:
+    for N in [1]:
+        for sigma in [0.005, 1.25,1.5]:
         #param_dict['p_accept'] = p_accept
+            param_dict["sigma"] = sigma
             for i in range(number_of_runs):
                 #p = random.random()
                 param_dict['world_value'] = random.random()
                 param_dict['number_of_s_agents'] = N
-                param_dict['p_er']=p_er
+                param_dict['p_er']=1
                 if param_dict['communication_mode'] == 'network':
                     param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], param_dict['p_er'])
 
