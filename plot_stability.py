@@ -4,8 +4,9 @@ import numpy as np
 import pandas as pd
 ### Plot 
 
-adress1 = "mv_data_model_stats_01_02_2023 15_48_13.xlsx.csv"
-adress2 = "mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv"
+adress1 = "MABS_data\mv_data_model_stats_01_02_2023 15_48_13.xlsx.csv" #10 agents
+adress2 = "MABS_data\mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv" # 5 agents
+adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
 
 stability_data = dict()
 # stability_data[0.001,0.9] = [169, 138, 125, 229, 135, 145, 114, 118, 278, 109]
@@ -20,11 +21,11 @@ stability_data = dict()
 # stability_data[0.8,0.5] = [293, 325, 486, 343, 294, 224, 332, 668, 329, 218]
 # stability_data[0.8,0.1] = [201, 202, 344, 135, 155, 268, 84, 281, 305, 328]
 
-mv_data = pd.read_csv(adress1).values.tolist() + pd.read_csv(adress2).values.tolist()
+mv_data = pd.read_csv(adress1).values.tolist() + pd.read_csv(adress2).values.tolist() + pd.read_csv(adress3).values.tolist()
 print(mv_data)
 
 i=0
-for N in [10,5]:
+for N in [10,5,20]:
     for p_er in [0.1, 0.5, 0.9]:
         stability_data[N,p_er] = []
         for d in mv_data[i]:
