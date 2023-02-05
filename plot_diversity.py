@@ -8,6 +8,8 @@ import pandas as pd
 #adress2 = "Output_Data\MABS_data\model_stats_02_02_2023 18_36_59.xlsx" #10 agents, 10 debates, 500 steps
 adress = "MABS_data\merged_10_agents_p_er_500_steps.xlsx" #merged 
 
+ft_size = 15 # font size for axis labels
+
 data = pd.read_excel(adress, sheet_name="Model")
 print(data)
 data = data[data["Step"]==498]
@@ -17,7 +19,10 @@ data.plot.scatter("P ER", "Opinion Diversity", marker="+", color="orange")
 p_data=data.groupby("P ER")["Opinion Diversity"].mean()
 print(p_data)
 plt.scatter(p_data.index, p_data.values)
+plt.plot(p_data.index, p_data.values)
 
-plt.xlabel("$p_{ER}$")
-plt.ylabel("Opinion Diversity $ED$")
+plt.xlabel("$p_{ER}$", font_size=ft_size)
+plt.ylabel("Opinion Diversity $ED$", font_size=ft_size)
+plt.xticks(fontsize = ft_size)
+plt.yticks(fontsize = ft_size)
 plt.show()

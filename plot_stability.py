@@ -5,7 +5,8 @@ import pandas as pd
 ### Plot 
 
 adress1 = "MABS_data\mv_data_model_stats_01_02_2023 15_48_13.xlsx.csv" #10 agents
-adress2 = "MABS_data\mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv" # 5 agents
+#adress2 = "MABS_data\mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv" # 5 agents
+adress2 = "MABS_data\mv_data_5_agents_stability.csv" # 5 agents, 1000 steps
 adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
 
 stability_data = dict()
@@ -21,7 +22,17 @@ stability_data = dict()
 # stability_data[0.8,0.5] = [293, 325, 486, 343, 294, 224, 332, 668, 329, 218]
 # stability_data[0.8,0.1] = [201, 202, 344, 135, 155, 268, 84, 281, 305, 328]
 
-mv_data = pd.read_csv(adress1).values.tolist() + pd.read_csv(adress2).values.tolist() + pd.read_csv(adress3).values.tolist()
+data1=pd.read_csv(adress1)
+data1["N"] = 10
+
+data2=pd.read_csv(adress2)
+data2["N"] = 5
+
+data3=pd.read_csv(adress3)
+data3["N"] = 20
+
+print(data2)
+mv_data = pd.concat([data1, data2, data3], axis=1)
 print(mv_data)
 
 i=0
@@ -54,13 +65,21 @@ for (N, p_er), points in stability_data.items():
         ys = [p_er for i in range(len(points))]
         za = np.average(points)
         zs = points
-        ax.scatter(xs, ys, zs, marker=m)
+        ax.scatter(xs, ys, zs, marker=m, color="orange")
         ax.scatter(xs, ys, za, marker='^', color='black', linewidth=5)
+    
 
+ax.plot(xs, ys, za, color='blue')
+
+ft_size = 15
 ax.set_xlabel('$N$')
 ax.set_ylabel('$p_{er}$')
 ax.set_zlabel('First step of stability $t_s$')
-
+plt.xticks(fontsize = ft_size)
+plt.yticks(fontsize = ft_size)
+ax.xaxis.label.set_size(ft_size)
+ax.yaxis.label.set_size(ft_size)
+ax.zaxis.label.set_size(ft_size)
 
 plt.show()
 
