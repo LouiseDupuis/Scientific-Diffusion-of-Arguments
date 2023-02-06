@@ -7,7 +7,7 @@ import pandas as pd
 ft_size = 15 # fotn size for axis labels
 
 # Influence of sigma on one agent 
-adress = "MABS_data\model_stats_02_02_2023 16_43_41.xlsx" # 1 agent ?
+adress = "MABS_data\model_stats_02_02_2023 16_43_41_error_1_agent.xlsx" # 1 agent ?
 
 
 data = pd.read_excel(adress, sheet_name="Model")

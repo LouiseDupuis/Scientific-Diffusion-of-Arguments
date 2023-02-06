@@ -7,7 +7,7 @@ import pandas as pd
 adress1 = "MABS_data\mv_data_10_agents_stability.csv" #10 agents
 #adress2 = "MABS_data\mv_data_model_stats_01_02_2023 13_49_13.xlsx.csv" # 5 agents
 adress2 = "MABS_data\mv_data_5_agents_stability.csv" # 5 agents, 1000 steps
-#adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
+adress3 = "MABS_data\mv_data_20_agents_stability.csv" # 20 agents
 
 stability_data = dict()
 # stability_data[0.001,0.9] = [169, 138, 125, 229, 135, 145, 114, 118, 278, 109]
@@ -29,10 +29,13 @@ data1["N"] = 10
 data2=pd.read_csv(adress2)
 data2["N"] = 5
 
+data3=pd.read_csv(adress3)
+data3["N"] = 20
+
 # data3=pd.read_csv(adress3)
 # data3["N"] = 20
 
-stability_data = pd.concat([data1, data2], axis=0,ignore_index=True)
+stability_data = pd.concat([data1, data2, data3], axis=0,ignore_index=True)
 print(stability_data)
 
 # for row in mv_data.items()
@@ -54,7 +57,7 @@ ax = fig.add_subplot(projection='3d')
 m = 'o' #marker
 
 cmap = plt.cm.get_cmap('tab10')
-colors = dict([(N,cmap(N*0.1)) for N in stability_data["N"].unique()])
+colors = dict([(N,cmap(N*0.05)) for N in stability_data["N"].unique()])
 
 for N in stability_data["N"].unique():
         color = colors[N]
@@ -70,7 +73,7 @@ for N in stability_data["N"].unique():
                 ax.scatter(xs, ys, zs, marker=m, color=color)
                 ax.scatter(xs, ys, za, marker='^', color='black', linewidth=5)
                 averages+=[(N,float(p_er),za)]
-        ax.plot([N for N,p_er,av in averages], [p_er for N,p_er,av in averages], [av for N,p_er,av in averages], color='blue')
+        ax.plot([N for N,p_er,av in averages], [p_er for N,p_er,av in averages], [av for N,p_er,av in averages], color=color)
 
 ft_size = 15
 ax.set_xlabel('$N$')

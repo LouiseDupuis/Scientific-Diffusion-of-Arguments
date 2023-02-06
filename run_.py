@@ -18,10 +18,10 @@ if __name__ == '__main__':
 
     start = time.process_time()
 
-    number_of_runs = 40
+    number_of_runs = 10
     param_dict = dict()
     param_dict['number_of_s_agents'] = 0
-    param_dict['step_count'] = 500
+    param_dict['step_count'] = 1000
     param_dict['sigma'] = 0.15 #accuracy ?
 
     # Connection parameters
@@ -72,36 +72,37 @@ if __name__ == '__main__':
 
     debate_id = 0
     for N in [1]:
-        for sigma in [0.005, 1.25,1.5]:
-        #param_dict['p_accept'] = p_accept
-            param_dict["sigma"] = sigma
-            for i in range(number_of_runs):
-                #p = random.random()
-                param_dict['world_value'] = random.random()
-                param_dict['number_of_s_agents'] = N
-                param_dict['p_er']=1
-                if param_dict['communication_mode'] == 'network':
-                    param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], param_dict['p_er'])
+        for sigma in [0.001, 0.2, 0.6]:
+            for T in [0.1, 0.5, 0.9]:
+            #param_dict['p_accept'] = p_accept
+                param_dict["sigma"] = sigma
+                for i in range(number_of_runs):
+                    #p = random.random()
+                    param_dict['world_value'] = T
+                    param_dict['number_of_s_agents'] = N
+                    param_dict['p_er']= 1
+                    if param_dict['communication_mode'] == 'network':
+                        param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], param_dict['p_er'])
 
-            
-                model = InformationDiffusion(param_dict, lightmode=True)
-                model.run_model()
-                model_stats = model.datacollector.get_model_vars_dataframe()
-                agent_stats =  model.datacollector.get_agent_vars_dataframe()
+                
+                    model = InformationDiffusion(param_dict, lightmode=True)
+                    model.run_model()
+                    model_stats = model.datacollector.get_model_vars_dataframe()
+                    agent_stats =  model.datacollector.get_agent_vars_dataframe()
 
-                model_stats['Debate'] = debate_id
-                model_stats['P ER'] = param_dict['p_er']
-                agent_stats['Debate'] = debate_id
-                model_stats['Issue Strength'] = param_dict['world_value']
-                agent_stats['Issue Strength'] = param_dict['world_value']
+                    model_stats['Debate'] = debate_id
+                    model_stats['P ER'] = param_dict['p_er']
+                    agent_stats['Debate'] = debate_id
+                    model_stats['Issue Strength'] = param_dict['world_value']
+                    agent_stats['Issue Strength'] = param_dict['world_value']
 
-                #model_stats['P accept'] = agent_stats['P accept'] = p_accept
-                #model_stats['Graph'] = agent_stats['Graph'] = name
-                #model_stats['P Erdos Renyi'] = agent_stats['P Erdos Renyi'] = p
+                    #model_stats['P accept'] = agent_stats['P accept'] = p_accept
+                    #model_stats['Graph'] = agent_stats['Graph'] = name
+                    #model_stats['P Erdos Renyi'] = agent_stats['P Erdos Renyi'] = p
 
-                result_list += [(model_stats, agent_stats)]
+                    result_list += [(model_stats, agent_stats)]
 
-                debate_id +=1
+                    debate_id +=1
 
         
     # concatenating the dataframes
