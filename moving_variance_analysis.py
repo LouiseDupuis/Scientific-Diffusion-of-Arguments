@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 #data = pd.read_excel("20 agents_pER=0_1500_steps_model_stats_06_09_2022 11_08_13.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("20_agents_500_steps_model_stats_05_09_2022 15_45_18.xlsx",sheet_name = "Agents")
 #data = pd.read_excel("model_stats_06_09_2022 14_59_11.xlsx",sheet_name = "Agents")
-adress = "MABS_data\model_stats_05_02_2023 21_10_50.xlsx"
+adress = "MABS_data\model_stats_06_02_2023 10_22_20.xlsx"
 data = pd.read_excel(adress, sheet_name = "Agents")
 
 
@@ -102,27 +102,52 @@ nb_steps = 50
 
 # compute stability for each debate in the data 
 
+# individual 
+
+def analyse_individual(data):
+
+    g_dict= dict()
+    for sigma in data["Sigma"].unique():
+        print(sigma)
+
+        sigma_data = data[data["Sigma"]==sigma]
+        for T in sigma_data['Issue Strength'].unique():
+            stab_list = []
+            sigma_T_data=sigma_data[sigma_data['Issue Strength']==T]
+            for debate_id in sigma_T_data["Debate"].unique():
+                deb_data=sigma_T_data[sigma_T_data["Debate"]==debate_id]
+                res = compute_stability(deb_data, debate_id, threshold, nb_steps)
+                #print("Step where stability is reached", res)
+                #show_moving_variance(data,i, threshold)
+
+                stab_list += [res]
+            g_dict[str(T)+ " " +str(sigma)]=stab_list
+    return g_dict
     
-g_dict= dict()
-for p_er in data["P ER"].unique():
-    print(p_er)
+# community 
 
-    per_data = data[data["P ER"]==p_er]
+def analyse_community(data):
+    g_dict= dict()
+    for p_er in data["P ER"].unique():
+        print(p_er)
 
-    stab_list = []
-    for debate_id in per_data["Debate"].unique():
-        deb_data=per_data[per_data["Debate"]==debate_id]
-        res = compute_stability(deb_data, debate_id, threshold, nb_steps)
-        #print("Step where stability is reached", res)
-        #show_moving_variance(data,i, threshold)
+        per_data = data[data["P ER"]==p_er]
 
-        stab_list += [res]
-    g_dict[p_er]=stab_list
+        stab_list = []
+        for debate_id in per_data["Debate"].unique():
+            deb_data=per_data[per_data["Debate"]==debate_id]
+            res = compute_stability(deb_data, debate_id, threshold, nb_steps)
+            #print("Step where stability is reached", res)
+            #show_moving_variance(data,i, threshold)
 
+            stab_list += [res]
+        g_dict[p_er]=stab_list
+        return g_dict
 
+g_dict = analyse_individual(data)
 print(g_dict)
 dt = pd.DataFrame(g_dict)
-dt.to_csv("mv_data_20_agents_stability" +".csv")
+dt.to_csv("mv_data_1_agents_stability" +".csv")
 
 # ax.legend(["MV", str(threshold)])
 

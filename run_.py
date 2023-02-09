@@ -21,7 +21,7 @@ if __name__ == '__main__':
     number_of_runs = 10
     param_dict = dict()
     param_dict['number_of_s_agents'] = 0
-    param_dict['step_count'] = 1000
+    param_dict['step_count'] = 500
     param_dict['sigma'] = 0.15 #accuracy ?
 
     # Connection parameters
@@ -71,16 +71,16 @@ if __name__ == '__main__':
     mean_result_list = []
 
     debate_id = 0
-    for N in [1]:
-        for sigma in [0.001, 0.2, 0.6]:
-            for T in [0.1, 0.5, 0.9]:
+    for N in [10]:
+        for p_er in [0,0.2,0.35, 0.5,0.7,0.9,0.95,0.98,1]:
+            #for T in [0.1, 0.5, 0.9]:
             #param_dict['p_accept'] = p_accept
                 param_dict["sigma"] = sigma
                 for i in range(number_of_runs):
                     #p = random.random()
-                    param_dict['world_value'] = T
+                    param_dict['world_value'] = random.random()
                     param_dict['number_of_s_agents'] = N
-                    param_dict['p_er']= 1
+                    param_dict['p_er']= p_er
                     if param_dict['communication_mode'] == 'network':
                         param_dict['graph'] = nx.fast_gnp_random_graph(param_dict['number_of_s_agents'], param_dict['p_er'])
 
