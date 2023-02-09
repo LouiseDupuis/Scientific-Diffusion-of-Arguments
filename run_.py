@@ -75,7 +75,7 @@ if __name__ == '__main__':
         for p_er in [0,0.2,0.35, 0.5,0.7,0.9,0.95,0.98,1]:
             #for T in [0.1, 0.5, 0.9]:
             #param_dict['p_accept'] = p_accept
-                param_dict["sigma"] = sigma
+                # param_dict["sigma"] = sigma
                 for i in range(number_of_runs):
                     #p = random.random()
                     param_dict['world_value'] = random.random()
